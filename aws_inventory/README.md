@@ -1,7 +1,7 @@
 quick and dirty aws inventory script using two parameters:
 	
-	- aws customer
-	- aws username
+	-c :  aws customer
+	-u :  aws username
 
 working:
 hostsUP()
