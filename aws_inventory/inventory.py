@@ -6,16 +6,16 @@ import os
 import sys
 import paramiko
 import re
+import getpass
 
 # -------vars--------
 timestr = time.strftime("%Y%m%d-%H%M%S")
-SSH_PORT = '22'
+SSH_PORT = '999'
 SSH_KEY_FILENAME = os.path.join(os.environ['HOME'], '.ssh', 'id_rsa')
-
 
 AWS = AWSCommunications()
 parser = argparse.ArgumentParser(description='get inventory')
-parser.add_argument('-c', '--customer', help='AWS customer name')
+parser.add_argument('-c', '--customer', help='Customer: latam, bcd, sia...')
 parser.add_argument('-u', '--username', help='Your AWS username')
 args = parser.parse_args()
 
@@ -53,7 +53,7 @@ def sshConnect(address):
     client.load_system_host_keys()
     try:
         client.connect(address, port=SSH_PORT, username=USERNAME,key_filename=SSH_KEY_FILENAME,timeout=10)
-        stdin, stdout, stderr = client.exec_command("uptime|awk '{ print $3\" \"$4}'")
+        stdin, stdout, stderr = client.exec_command("uptime|awk '{ print $3\" \"$4}'|tr '\n' ' '")
         return (re.compile(r'\x1b[^m]*m')).sub('', stdout.readline())
         client.close()
     except Exception as ex:
