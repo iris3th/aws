@@ -1,4 +1,5 @@
 #!/bin/bash
+
 [ $# -ne 3  ] && { echo “usage: script requires 3 command line parameters, AWS_ACCESS_KEY_ID , AWS_SECRET_ACCESS_KEY , AWS_REGION space separated"; exit 1; }
 
 export AWS_ACCESS_KEY_ID=$1
